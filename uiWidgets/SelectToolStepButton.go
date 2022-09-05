@@ -5,7 +5,6 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/Z-Bolt/OctoScreen/logger"
 	"github.com/Z-Bolt/OctoScreen/octoprintApis"
 	// "github.com/Z-Bolt/OctoScreen/octoprintApis/dataModels"
 	"github.com/Z-Bolt/OctoScreen/utils"
@@ -44,14 +43,10 @@ func CreateSelectExtruderStepButton(
 		steps = append(steps, Step{"Bed", "bed.svg", nil, "bed"})
 	}
 
-	base, err := CreateStepButton(
+	base := CreateStepButton(
 		1,
 		steps...,
 	)
-	if err != nil {
-		logger.LogError("PANIC!!! - CreateSelectExtruderStepButton()", "CreateStepButton()", err)
-		panic(err)
-	}
 
 	instance := &SelectToolStepButton{
 		StepButton: base,
@@ -89,14 +84,10 @@ func CreateSelectHotendStepButton(
 		steps = append(steps, Step{"Bed", "bed.svg", nil, "bed"})
 	}
 
-	base, err := CreateStepButton(
+	base := CreateStepButton(
 		1,
 		steps...,
 	)
-	if err != nil {
-		logger.LogError("PANIC!!! - CreateSelectHotendStepButton()", "CreateStepButton()", err)
-		panic(err)
-	}
 
 	instance := &SelectToolStepButton{
 		StepButton: base,
