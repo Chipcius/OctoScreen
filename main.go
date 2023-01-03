@@ -46,10 +46,6 @@ func init() {
 	}
 
 	cfg := readConfig(ConfigFile)
-	if cfg == nil {
-		initSucceeded = false
-		return
-	}
 
 	setApiKey(cfg)
 	setLogLevel()
@@ -201,8 +197,9 @@ func setLogLevel() {
 
 func setBaseUrl(cfg *config) {
 	BaseURL = os.Getenv(utils.EnvBaseURL)
+
 	if BaseURL == "" {
-		if cfg.Server.Host != "" {
+		if cfg != nil && cfg.Server.Host != "" {
 			BaseURL = fmt.Sprintf("http://%s:%d", cfg.Server.Host, cfg.Server.Port)
 		} else {
 			BaseURL = "http://0.0.0.0:5000"
@@ -224,7 +221,9 @@ func setApiKey(cfg *config) {
 	APIKey = os.Getenv(utils.EnvAPIKey)
 	if APIKey == "" {
 		logger.Debug("main.setApiKey() - APIKey is empty, now using cfg.API.Key")
-		APIKey = cfg.API.Key
+		if cfg != nil{
+			APIKey = cfg.API.Key
+		}
 	}
 
 	if APIKey == "" {

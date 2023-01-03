@@ -45,8 +45,8 @@ func PrintStatusPanel(ui *UI) *printStatusPanel {
 			CommonPanel: NewTopLevelCommonPanel("PrintStatusPanel", ui),
 		}
 
-		// Default timeout of 20 seconds.
-		durration := time.Second * 20
+		// Default timeout of 15 seconds.
+		durration := time.Second * 15
 
 		// Experimental, set the timeout based on config setting, but only if the config is pressent.
 		updateFrequency := os.Getenv("EXPERIMENTAL_PRINT_UPDATE_FREQUENCY")
@@ -332,7 +332,7 @@ func (this *printStatusPanel) updateJob() {
 		jobFileName = jobResponse.Job.File.Name
 		jobFileName = strings.Replace(jobFileName, ".gcode", "", -1)
 		jobFileName = strings.Replace(jobFileName, ".gco", "", -1)
-		jobFileName = utils.TruncateString(jobFileName, 20)
+		jobFileName = utils.TruncateString(jobFileName, 30)
 	}
 
 	this.fileLabel.Label.SetLabel(jobFileName)
@@ -352,8 +352,8 @@ func (this *printStatusPanel) updateJob() {
 			logger.Info(jobResponse.Progress.PrintTime)
 			printTime := time.Duration(int64(jobResponse.Progress.PrintTime) * 1e9)
 			printTimeLeft := time.Duration(int64(jobResponse.Progress.PrintTimeLeft) * 1e9)
-			timeSpent = fmt.Sprintf("Time: %s", printTime)
-			timeLeft = fmt.Sprintf("Left: %s", printTimeLeft)
+			timeSpent = fmt.Sprintf("Time: %s", utils.FormatDuration(printTime))
+			timeLeft = fmt.Sprintf("Left: %s", utils.FormatDuration(printTimeLeft))
 	}
 
 	this.timeLabel.Label.SetLabel(timeSpent)

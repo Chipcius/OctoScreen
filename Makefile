@@ -14,6 +14,7 @@ GOTEST = $(GOCMD) test -v
 WORKDIR := $(shell pwd)
 BUILD_PATH := $(WORKDIR)/build
 DOCKER_IMAGE_BUILD = mcuadros/octoprint-tft-build
+BINARY_NAME := octoscreen.exe
 
 DEBIAN_PACKAGES = STRETCH
 
@@ -64,7 +65,7 @@ $(DEBIAN_PACKAGES):
 		make build-internal
 
 build-internal: prepare-internal
-	#go build --tags ${GO_TAGS} -v -o /build/bin/${BINARY_NAME} main.go
+	go build --tags ${GO_TAGS} -v -o /build/bin/${BINARY_NAME} main.go
 	cd $(WORKDIR); \
 	debuild --prepend-path=/usr/local/go/bin/ --preserve-env -us -uc; \
 	cp ../*.deb /build/;
