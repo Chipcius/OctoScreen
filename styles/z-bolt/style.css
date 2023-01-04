@@ -1,3 +1,7 @@
+* {
+	color: white;
+}
+
 window {
 	background-color: #13181C;
 	-gtk-icon-shadow: none;
